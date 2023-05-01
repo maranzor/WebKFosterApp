@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Carey Foster Bridge</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script type="text/javascript" src="./script.js"></script>
+</head>
+<body>
+<div id="whole_body">
+    <div style="font-size:40px; text-align:center; height:60px"> <b>Carey Foster Bridge</b></div>
+    <div id="description">
+        <h3>&nbsp <u>Этапы:</u> </h3>
+        <div class="text_info">
+            <p>1. Установите напряжение (V =12 В) и частоту (500 Гц) и установите неизвестное значение емкости на вкладке "Установить значение конденсатора", нажав на кнопку "установить".</p>
+            <p>2. Затем включите питание, чтобы получить отклонение милливольтметра.</p>
+            <p>3. Теперь измените значения R1, L1, M и R4 в окне управления ниже или непосредственно введите значения в поля соответствующих элементов.</p>
+            <p>4. Следите за указателем милливольтметра, чтобы достичь значения "Null".</p>
+            <p>5. Если достигнуто значение "NULL", перейдите на вкладку "Измерение значения емкости" и нажмите "Имитировать". Обратите внимание на расчетные значения неизвестной емкости (C3) и неизвестного внутреннего сопротивления (R3) конденсатора. Также обратите внимание на коэффициент рассеивания неизвестного конденсатора, который определяется как w⋅C⋅R . где w=2⋅π⋅f.</p>
+        </div>
+    </div>
+    <div name='f1' class="mainBlock">
+        <div class="setValueBlock">
+            <div class="SetValueKond">
+                <label><h3>Установка значения конденсатора</h3></label>
+                <div style="margin-top: 10px;">
+                    <select id="select" name="c3" style="width:70px"></select><label>&nbspмФ(микрофарады)</label>
+                </div>
+                <button type="button" onclick="Set_param()" value="Установить" class="btn">Установить</button>
+            </div>
+            <div class="SetValueKond">
+                <label><h3>Измерение значения конденсатора</h3></label>
+                <div style="margin-top: 10px;">
+                    <label style="display: inline; margin-top: 10px;">Показания вольтметра:</label>
+                    <input style="display: inline; margin-top: 10px;"  type="number" name="A2" value="0" id="A2" readonly="readonly">&nbsp;мВ.<br>
+                    <label style="display: inline; margin-top: 10px;">Ёмкость конденсатора:</label>
+                    <input style="display: inline; margin-top: 10px;" type="number" name="c333" value="0" id="c333" readonly="readonly"><label>&nbsp;мФ</label>
+                        <br> <label style="margin-top: 10px;">Сопротивление:</label>
+                        <input style="margin-top: 10px;" type="number" name="r333" value="0" id="r333" readonly="readonly">&nbsp;Ом
+                        <br> Фактор рассеивания:
+                        <input style="margin-top: 10px;" type="number" name="rd33" value="0" id="rd33" readonly="readonly">
+                        <button type="button" value="Simulate" onclick="simulate_rc()" class="btn">Расчитать</button>
+
+                </div>
+            </div>
+        </div>
+        <div id="scheme">
+            <p>
+                <img src="./images/scheme.jpg" onload="loadData()" style="position:absolute; border-radius: 10px; top:0;  right:0; height:500px; width:500px" alt=""/>
+                <img id="myImage" onclick="changeImage()" src="./images/s1.png" style="cursor: pointer; position:absolute; height:50px; width:50px; top:380px;  right:310px;" alt=""/>
+            <div class="example-content" style="position:absolute; top:125px;  right:150px;">
+                <div id="chart3" class="plot" style="background-color:transparent; width:200px; height:120px;"></div>
+            </div>
+            <input type="number" name="r1" id="r1" min="1" max="11100000" step="1" value="1" onchange="pr1.value=this.value; execute_ckt();" style="position:absolute; top:35px;  right:326px; width:70px">
+    
+            <input type="number" name="r2" id="r4" min="1" max="11100000" step="1" value="1" onchange="pr4.value=this.value; execute_ckt();" style="position:absolute; top:255px;  right:43px; width:70px">
+            <input type="number" name="l1" id="l1" min="1" max="1000" step="1" value="1000"  onchange="pl1.value=this.value; execute_ckt();" style="position:absolute; top:140px;  right:334px; width:48px">
+            <input type="number" name="m1" id="m1" min="1" max="100" step="1" value="1" onchange="pm1.value=this.value; execute_ckt();" style="position:absolute; top:81px;  right:410px; width:40px">
+    
+            <input type="number" name="r3" value="20" id="r3" style="position:absolute; top:55px;  right:100px; width:50px; background-color:transparent; border:none; box-shadow: none;" readonly="readonly">
+            <input type="number" name="c3" value="0.1" id="c3" style="position:absolute; top:125px;  right:25px; width:70px; background-color:transparent; border:none; box-shadow: none;" readonly="readonly">
+            <input type="number" name="v1" value="12" id="v1" style="position:absolute; top:400px;  right:250px; width:50px">
+            <input type="number" name="f1" value="500" id="f1" style="position:absolute; top:400px;  right:200px; width:40px">
+            <input type="number" name="A1" value="0" id="A1" style="background-color:#E3DE84; text-align:center; position:absolute; top:215px;  right:210px; width:70px" readonly="readonly">
+            </p>
+        </div>
+    </div>
+    <form  style="position: relative;">
+        <div id="rcorners3" style="background: #e7f3ff; position:absolute; border-radius: 10px; border: 2px solid #8AC007; top:580px; right:0; width:500px; color:#333" align="center">
+            <b>Управление</b><br>
+            &nbsp&nbsp R1 : 1 Ohm &nbsp <input type="range" name="pr1" id="pr1" min="1" max="11100000" step="1" value="1" onchange="r1.value=this.value; execute_ckt();" style="width:280px">&nbsp 11.5 MOhm<BR>
+            &nbsp&nbsp R4 : 1 Ohm &nbsp <input type="range" name="pr4" id="pr4" min="1" max="11100000" step="1" value="1" onchange="r4.value=this.value; execute_ckt();" style=" width:280px">&nbsp 11.5 MOhm<br>
+            &nbsp&nbsp L1 : 1 uH &nbsp <input type="range" name="pl1" id="pl1" min="1" max="1000" step="1" value="1000" onchange="l1.value=this.value; execute_ckt();" style=" width:280px">&nbsp 1000 uH<br>
+            &nbsp&nbsp M: 1 uH &nbsp <input type="range" name="pm1" id="pm1" min="1" max="100" step="1" value="1" onchange="m1.value=this.value; execute_ckt();" style=" width:280px">&nbsp 100 uH<br>
+
+            <br>
+        </div>
+
+    </form>
+</div>
+</body>
+</html>
