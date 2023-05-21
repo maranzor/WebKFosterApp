@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Carey Foster Bridge</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script type="text/javascript" src="./script.js"></script>
+</head>
+<body>
+<div id="whole_body">
+    <div style="font-size:40px; text-align:center; height:60px"> <b>Измерение емкости с помощью моста Кэри Фостера</b></div>
+    <div id="description">
+        <h3>&nbsp <u>Инструкция:</u> </h3>
+        <div class="text_info">
+            <p>1. Выберите вариант в соответствии с заданием преподавателя и нажмите кнопку «Установить».</p>
+            <p>2. Установите напряжение (V, В), частоту (f, Гц) и включите измерительную схему с помощью тумблера.</p>
+            <p>3. Уравновесьте мостовую схему, изменив значения в окне управления «Уравновешивание измерительной мостовой схемы» или непосредственно введя значения в поля соответствующих элементов L1, L2, R1,R4 в любом порядке, пока показания милливольтметра (mV) не установятся < 0,05.</p>
+            <p>4. Когда показания милливольтметра (mV) установятся < 0,05, нажмите кнопку «Измерить» для измерения параметров конденсатора.</p>
+            <p>5. Запишите измеренные значения емкости, активного сопротивления и коэффициента добротности конденсатора в лабораторный журнал.</p>
+        </div>
+    </div>
+    <div name='f1' class="mainBlock">
+        <div class="setValueBlock">
+            <div class="SetValueKond">
+                <label><h3>Выбор варианта</h3></label>
+                <div style="margin-top: 10px;">
+                    <select id="select" name="c3" style="width:130px"></select>
+                </div>
+                <button type="button" onclick="Set_param()" value="Установить" class="btn">Установить</button>
+            </div>
+            <div class="SetValueKond">
+                <label><h3>Уравновешивание измерительной мостовой схемы</h3></label>
+                <div style="margin-top: 10px;">
+                    <label style="display: inline; margin-top: 10px;">Магазин сопротивлений R4:</label>
+                    <input style="display: inline; margin-top: 10px;"  type="number" name="R4" min="0.010" max="1000" step="0.1" value="0" id="r4_input">&nbsp;Ом
+                    <label style="display: block; margin-top: 10px;">Магазин сопротивлений R1:</label>
+                    <input style="display: inline; margin-top: 10px;" type="number" name="R1" min="0.010" max="1000" step="0.1" value="0" id="r1_input"><label>&nbsp;Ом</label>
+                    <label style="display: block; margin-top: 10px;">Магазин индуктивности L1:</label>
+                    <input style="display: inline; margin-top: 10px;" type="number" name="L1" min="0.1" max="1000" step="0.1" value="0"  id="l1_input">&nbsp;Гн
+                    <label style="display: block; margin-top: 10px;">Магазин индуктивности L2:</label>
+                    <input style="margin-top: 10px;" type="number" name="L2" min="0.1" max="1000" step="0.1" value="0" id="l2_input">&nbsp;Гн
+                    <button type="button" value="Simulate" onclick="simulate_rc()" class="btn">Измерить</button>
+
+                </div>
+            </div>
+        </div>
+        <div id="scheme">
+            <p>
+                <img src="./images/sсheme.png" onload="loadData()" style="position:absolute; border-radius: 10px; top:0;  right:0; height:500px; width:500px" alt=""/>
+                <img id="myImage" onclick="changeImage()" src="./images/s1.png" style="cursor: pointer; position:absolute; height:50px; width:50px; top:380px;  right:310px;" alt=""/>
+            <input type="number" name="r1_scheme" id="r1_scheme" min="0.010" max="1000" step="0.1" value="0.1" style="position:absolute; top:25px;  right:303px; width:70px;">
+    
+            <input type="number" name="r4_scheme" id="r4_scheme" min="0.010" max="1000" step="0.1" value="0.1" style="position:absolute; top:293px;  right:70px; width:70px;">
+            <input type="number" name="l1_scheme" id="l1_scheme" min="1" max="1000" step="0.1" value="1" style="position:absolute; top:164px;  right:280px;text-align: start; width:90px;">
+            <input type="number" name="l2_scheme" id="l2_scheme" min="1" max="1000" step="0.1" value="1" style="position:absolute; top:91px;  right:382px; width:90px;">
+    
+            <input type="number" name="r3" value="20" id="r3" style="display:none;position:absolute; top:55px;  right:92px; width:50px; pointer-events: none;background-color:#8cb2df;box-shadow: none;" readonly="readonly">
+            <input type="number" name="c3" value="0.1" id="c3" style="display:none;position:absolute; top:83px;  right:5px; width:65px;pointer-events: none;background-color:#8cb2df;box-shadow: none;" readonly="readonly">
+            <input type="number" name="v1" value="12" id="v1" style="position:absolute; top:400px;  right:250px; width:50px;"/>
+            <span style="position:absolute; top:402px;  right:234px; font-size: 18px;">В</span>
+            <span style="position:absolute; top:380px;  right:274px; font-size: 18px;">V</span>
+            <input type="number" name="f1" value="500" id="f1" style="position:absolute; top:400px;  right:175px; width:50px;">
+            <span style="position:absolute; top:402px;  right:151px; font-size: 18px;">Гц</span>
+            <span style="position:absolute; top:380px;  right:200px; font-size: 18px;">f</span>
+            <input type="number" name="volt" value="0" id="volt" style="background-color:#E3DE84; text-align:center; position:absolute; top:220px;  right:180px; width:120px" readonly="readonly">
+            </p>
+        </div>
+        <div class="SetValueKond">
+            <label><h3>Результаты измерения параметров конденсатора</h3></label>
+            <div style="margin-top: 10px;">
+                <label style="display: block; margin-top: 10px;">Емкость:</label>
+                <input style="display: inline; margin-top: 10px;" type="number" name="Capacity" value="0" id="capacity_result" readonly="readonly"><label>&nbsp;мФ</label>
+                <label style="display: block; margin-top: 10px;">Активное сопротивление:</label>
+                <input style="display: inline; margin-top: 10px;" type="number" name="resist" value="0" id="resist_result" readonly="readonly">&nbsp;Ом
+                <label style="display: block; margin-top: 10px;"> Коэффициент добротности:</label>
+                <input style="display: inline; margin-top: 10px;" type="number" name="factor" value="0" id="factor_result" readonly="readonly">
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
